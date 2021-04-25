@@ -1,0 +1,15 @@
+The Abstraction, The Process
+
+1. Both of them should run completely, and the cpu should be busy 100% of the time. If that were not the case, the CPU would be used in an inefficient way.
+
+2. The first process only takes 4 time because the cpu doesn't have to wait on anything. The second process however, need to do I/O and the CPU is not used, the kernel just keeps track of the process then recieves an interrupt to detect it is done.
+
+3. The ordering of the scheduler matters because a program can perform I/O simultaneously while the CPU is running another program, thus more efficient usage if you schedule the I/O first.
+
+4. When the SWITCH_ON_END flag is set, the programs take almost double the time than without the flag. The CPU and I/O are not efficiently used. 
+
+5. The same time and situation for processes without the switch occurs (efficient usage)
+
+6. No, the systems resources are not being efficiently utilized because the processes should be running parallel with the I/O. In this case, the first I/O occurs, then all the processes are run before the next 3 I/O's occur (these two things can be done in tandem).
+
+7. As described in my previous answer, now the CPU is being used 100% of the time and the I/O is being completed in tandem. This reduces the time by about 30% and is more efficient.
