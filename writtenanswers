@@ -1,3 +1,5 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 The Abstraction, The Process
 
 1. Both of them should run completely, and the cpu should be busy 100% of the time. If that were not the case, the CPU would be used in an inefficient way.
@@ -13,3 +15,39 @@ The Abstraction, The Process
 6. No, the systems resources are not being efficiently utilized because the processes should be running parallel with the I/O. In this case, the first I/O occurs, then all the processes are run before the next 3 I/O's occur (these two things can be done in tandem).
 
 7. As described in my previous answer, now the CPU is being used 100% of the time and the I/O is being completed in tandem. This reduces the time by about 30% and is more efficient.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CPU Scheduler
+
+4. When the jobs are given in Increasing order all at the same time (more like with a neglible amount of time in between) the FIFO policy and SJF policy will both run at the same speeds
+
+5. The RR and SJF times would be the same if you set the quantum to 0 and then input the jobs in Increasing order to the RR policy. It would also be the same if you had all the jobs of the same length and set the quantum to be that length.
+
+6. As the job lengths increase equally among all the programs, the shortest job can have a large amount of time, meaning the jobs behind the first will get longer and longer response times6. As the job lengths increase equally among all the programs, the shortest job can have a large amount of time, meaning the jobs behind the first will get longer and longer response times6. As the job lengths increase equally among all the programs, the shortest job can have a large amount of time, meaning the jobs behind the first will get longer and longer response times6. As the job lengths increase equally among all the programs, the shortest job can have a large amount of time, meaning the jobs behind the first will get longer and longer response times6. As the job lengths increase equally among all the programs, the shortest job can have a large amount of time, meaning the jobs behind the first will get longer and longer response times6. As the job lengths increase equally among all the programs, the shortest job can have a large amount of time, meaning the jobs behind the first will get longer and longer response times
+
+7. The response time becomes longer and longer. The equation for the longest response time would be the n + n + n + ... / 1 ( which is the same thing a FIFO )
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. "Long Running Job Over Time" - The scheduler would have a constant quanta across all three priority queues, no boosts, and just one CPU-hogging job.
+
+"Along Came An Interactive Job" - Have a schduler that still will lower jobs that take their entire quantum, but no more complexity other than that and the queue priorities themselves. After a CPU hogging process sinks and stays at the bottom for a while, a shorter program comes in and finishes first. There is no boosting, so the second program completes in its entirety then the first cpu hog resumes.
+
+"A Mixed I/O intensive and CPU intensive Workload" - Have the scheduler run basic with a lower in priority if the program runs for the whole time (no boost) and let the ones at the bottome run while the I/O intensive programs run their I/O. The CPU and I/O intensive programs run in an ideal way (although it is only two programs).
+
+"Priority Boost" - Every few miliseconds on an interval reset the priority of all the jobs to allow at least some progress to be getting done on the CPU intensive-long-time program (avoiding starvation). Still running Round Robin for the two upper programs and letting the lower CPU intense program just run a single interval every time the boost comes in.
+
+"Gaming Tolerence" - The problem that is aimed to be avoided is a job that may game the system by stopping short by the smallest amount of detectable time so that the priority of the job never drops, even if it uses 99% the same amount of cpu that the "no I/O" CPU intensive program uses. To avoid this, we not only take into account the number of times a job conducts I/O, but we also take into account how much total time is takes out of the alotted time given. This will prevent the gaming of the system.
+
+
+
+"Lower Priority, Longer Quanta" - Assuming that the lower quanta is only relevant when there are no upper priority jobs, I think this method would be done by allowing different Quanta for each of the priority levels, but then you would only need the lower priority levels if there were no upper priority level jobs. If there are upper priority level jobs, then the lower level CPU intensive jobs would only be able to run if they were boosted or during I/O.
+
+3. I would just set the queues to be 1, the quantum to be a set amount and (if possible) just let the CPU run idle if there is I/O for the currently worked job.
+
+4.  python3 mlfq.py -n 3 -Q 10,1,1 -l 0,50,9:0,50,0 -c -i 1 -a 1 -S
+
+5. This would depend on how many jobs there were and how long they would run (if they ran i/o or not). 
+
+6. If there was a job that would run i/o right before the end of the quanta and the length of the i/o was 1, then it would makes sense to just let the job run once the i/o finishes to reduce the turnaround time of the job (or multiple if there are many that do that).
