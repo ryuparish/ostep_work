@@ -1,4 +1,4 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 The Abstraction, The Process
 
@@ -51,3 +51,46 @@ CPU Scheduler
 5. This would depend on how many jobs there were and how long they would run (if they ran i/o or not). 
 
 6. If there was a job that would run i/o right before the end of the quanta and the length of the i/o was 1, then it would makes sense to just let the job run once the i/o finishes to reduce the turnaround time of the job (or multiple if there are many that do that).
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Segmentation Chapter 16
+
+1. a) 0: PA 492 - Since this has a highbit value of 0, this will on the stack (from 512 to 492 in physical memory). The length of the segment will be Virtual_address_size - Virtual address (128 - 108 = 20 bytes)
+
+    So this program will completely take up the stack, but will still fit into 512 - 492.
+      1 & the rest: The rest are all less that 108 and are on the stack, therefore the rest of them will not fit in the physical memory.
+
+   b) 0: PA 17 - Okay I guess there is no way to tell if these points are in the heap or the stack because I don't see any bits that say anything. This one would fit on the heap since it is less than 20.
+      1: PA 492 - This one would fit on the stack since 128 - 108 < 20.
+      2, 3, 4: SEGFAULT - This one does not work for either the stack or the heap. 
+
+   c) 0: PA 506 (Stack)
+      1: PA 505 (Stack)
+      2: PA 7 (Heap)
+      3: PA 10 (Heap)
+      4: SEGFAULT
+
+2. a) The highest legal virtual address in the previous question is 19 in segment 0.
+
+   b) The lowest legal virtual address segment is seg 1 is 108.
+
+   c) The lowest illegal address space is 21 and the highest illegal address space is 107.
+
+   d) python3 segmentation.py -a 128 -p 512 -b 0 -l 20 -B 512 -L 20 -s 2 -A 19,108,21,107 -c
+
+3. segmentation.py -a 16 -p 128 -A 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 --b0 0 --l0 2 --b1 128 --l1 2
+
+4. You should set the combined total of the heap physical space and the stack physical space to be 10% of the virtual memory, therefor if you randomly generate, only 10% should end up being valid.
+
+5. Make the heap space larger or smaller than max or minimum value of the virtual addresses and then make the physical stack space smaller than all the differences between the address space size minus the virtual addresses.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Malloc.py
+
+5. The ordering matters in this case because if the list is ordered in a way such as sizesort, the chances that the addresses will be next to each other for coalescing is small. Therefore, no coalescing would happen and external fragementation would flourish.
+
+6. The higher the percentage you allocate without giving back, the less of a chance there is for a neighboring address to be deallocated. Therefore, the chances of coalescing lessen and the memory becomes more fragmented.
