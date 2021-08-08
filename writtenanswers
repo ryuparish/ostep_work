@@ -94,3 +94,11 @@ Malloc.py
 5. The ordering matters in this case because if the list is ordered in a way such as sizesort, the chances that the addresses will be next to each other for coalescing is small. Therefore, no coalescing would happen and external fragementation would flourish.
 
 6. The higher the percentage you allocate without giving back, the less of a chance there is for a neighboring address to be deallocated. Therefore, the chances of coalescing lessen and the memory becomes more fragmented.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Small Table paging
+
+1. Instead of only a base register for the page table(linear), you would need a page table for the page directory(1) then you would need to keep track of each page-directory-page register(n), since the physical location where the pages are stored may be scattered or just in different places.
+
+

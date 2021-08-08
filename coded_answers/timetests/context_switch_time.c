@@ -52,6 +52,7 @@ int main() {
         printf("Child 2 Wrote at: %ld\nChild 1 Read at: %ld", child2time, (t.tv_usec));
         // Close the write of the pipe since we are done writing 
         close(pipefd[1]);
+        printf("\nDone\n");
     }
 
     else {
